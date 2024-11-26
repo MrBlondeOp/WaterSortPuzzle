@@ -1,11 +1,16 @@
-// Configuration
+// Configuration: 8 Bottles with random colors
 const gameData = [
   ["color1", "color2", "color3", "color4"],
-  ["color1", "color2", "color3", "color4"],
+  ["color4", "color3", "color2", "color1"],
+  ["color5", "color6", "color7", "color8"],
+  ["color8", "color7", "color6", "color5"],
+  ["color2", "color3", "color1", "color4"],
+  ["color7", "color8", "color5", "color6"],
   [],
+  []
 ];
 
-// Create bottles dynamically
+// Game Initialization
 const gameContainer = document.getElementById("game-container");
 const bottles = [];
 
@@ -24,7 +29,7 @@ gameData.forEach((bottleData, index) => {
   bottles.push(bottle);
 });
 
-// Game logic
+// Game Logic
 let selectedBottle = null;
 
 bottles.forEach(bottle => {
@@ -36,9 +41,9 @@ bottles.forEach(bottle => {
       selectedBottle = bottleIndex;
       bottle.style.border = "3px solid red";
     } else {
-      // Transfer liquid
+      // Attempt to transfer liquid
       transferLiquid(selectedBottle, bottleIndex);
-      bottles[selectedBottle].style.border = "2px solid #444";
+      bottles[selectedBottle].style.border = "2px solid #fff";
       selectedBottle = null;
     }
   });
@@ -55,9 +60,31 @@ function transferLiquid(fromIndex, toIndex) {
   const liquidToMove = fromBottle[fromBottle.length - 1];
 
   if (toBottle.length === 0 || toBottle[toBottle.length - 1] === liquidToMove) {
-    fromBottle.pop();
-    toBottle.push(liquidToMove);
-    updateGameUI();
+    const movingLiquid = document.createElement("div");
+    movingLiquid.classList.add("liquid", liquidToMove);
+    movingLiquid.style.position = "absolute";
+    movingLiquid.style.transition = "transform 0.5s ease";
+
+    // Simulate transfer animation
+    const sourceBottle = bottles[fromIndex];
+    const targetBottle = bottles[toIndex];
+
+    const sourceRect = sourceBottle.getBoundingClientRect();
+    const targetRect = targetBottle.getBoundingClientRect();
+
+    document.body.appendChild(movingLiquid);
+    const xOffset = targetRect.left - sourceRect.left;
+    const yOffset = targetRect.top - sourceRect.top;
+
+    movingLiquid.style.transform = `translate(${xOffset}px, ${yOffset}px)`;
+
+    setTimeout(() => {
+      document.body.removeChild(movingLiquid);
+
+      fromBottle.pop();
+      toBottle.push(liquidToMove);
+      updateGameUI();
+    }, 500);
   }
 }
 
