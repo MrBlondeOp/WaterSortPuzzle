@@ -1,0 +1,43 @@
+body {
+  font-family: Arial, sans-serif;
+  text-align: center;
+  background-color: #f7f7f7;
+  margin: 0;
+  padding: 0;
+}
+
+h1 {
+  margin: 20px 0;
+  color: #333;
+}
+
+#game-container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 20px;
+}
+
+.bottle {
+  width: 80px;
+  height: 200px;
+  border: 2px solid #444;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column-reverse;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.bottle .liquid {
+  width: 100%;
+  height: 25%;
+  border-top: 1px solid #000;
+}
+
+.color1 { background-color: #ff6f61; }
+.color2 { background-color: #6a9eff; }
+.color3 { background-color: #ffea61; }
+.color4 { background-color: #81d864; }
+.color5 { background-color: #e361ff; }
